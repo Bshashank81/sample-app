@@ -8,6 +8,9 @@ plugins {
 group = 'com.capone'
 version = '0.0.1-SNAPSHOT'
 
+def props = new Properties()
+file("dev.env").withInputStream { props.load(it) }
+
 java {
 	sourceCompatibility = '17'
 }
@@ -36,9 +39,10 @@ dependencies {
 
 sonar {
 	properties {
-		property "sonar.projectKey", "balabhadra_shashank_ldp"
-		property "sonar.organization", "zemoso-int"
-		property "sonar.host.url", "https://sonarcloud.io"
+		property "sonar.projectKey", props.getProperty("SONAR_PROJECT_KEY")
+		property "sonar.organization", props.getProperty("SONAR_ORGANIZATION")
+		property "sonar.host.url", props.getProperty("SONAR_HOST_URL")
+		property "sonar.login", props.getProperty("SONAR_TOKEN")
 	}
 }
 
